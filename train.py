@@ -1,4 +1,4 @@
-"""Train/evaluate CBMA-TN-VQC and run the toy electrolyser dispatch. Example: python train.py --epochs 2"""
+"""Train/evaluate CBMA-TN-VQC and run the toy electrolyzer dispatch. Example: python train.py --epochs 2"""
 import argparse, numpy as np, torch
 from src.train_common import get_data, fit, evaluate
 from src.cbma_tn_vqc import CBMA_TN_VQC, electrolyzer_h2_kgph
@@ -13,4 +13,4 @@ m = CBMA_TN_VQC(tr[0].shape[2], a.lookback, n_qubits=a.qubits, n_layers=a.layers
 fit(m, tr, va, a.epochs, lr=2e-3); evaluate(m, te, sc, name="cbma_tn_vqc")
 with torch.no_grad(): ws = m(torch.tensor(te[0])).numpy() * sc[1] + sc[0]
 h2 = electrolyzer_h2_kgph(power_curve(ws, rated=10000.0))
-print(f"toy electrolyser (forecast-informed setpoint): mean H2 = {h2.mean():.1f} kg/h over {len(h2)} steps")
+print(f"toy electrolyzer (forecast-informed setpoint): mean H2 = {h2.mean():.1f} kg/h over {len(h2)} steps")

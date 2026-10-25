@@ -34,7 +34,7 @@ class CBMA_TN_VQC(nn.Module):
         return self.head(torch.cat([c, self.tn(x), self.q(c)], -1)).squeeze(-1)
 
 def electrolyzer_h2_kgph(power_kw, rated_kw=10000.0, hhv_kwh_per_kg=39.4):
-    """Toy PEM electrolyser: part-load Faradaic/stack efficiency curve; H2 output in kg/h."""
+    """Toy PEM electrolyzer: part-load Faradaic/stack efficiency curve; H2 output in kg/h."""
     import numpy as np
     load = np.clip(power_kw / rated_kw, 0, 1)
     eff = np.where(load < 0.1, 0.0, 0.75 - 0.15 * (load - 0.5) ** 2)
