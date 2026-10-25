@@ -57,8 +57,8 @@ on the training split. The target is wind speed `horizon` steps ahead. The data 
 python -m venv .venv && source .venv/bin/activate
 pip install -r requirements.txt
 
-# quick smoke test on the built-in synthetic data
-python train.py --epochs 2
+# quick smoke test (< 1 minute on a CPU) on the bundled synthetic data
+python train.py --quick
 
 # full run on your own SCADA-style CSV
 python train.py --csv path/to/scada.csv --epochs 30 --qubits 6
@@ -69,15 +69,15 @@ naive persistence baseline for comparison. MAPE uses a 0.5 m/s floor in the deno
 
 ## Smoke-test results (synthetic data only) · 測試
 
-These come from a deliberately tiny run (2 epochs, 1,500 synthetic rows, 4 qubits, seed 42) on **synthetic data**, just to check that the pipeline works
+These come from `python train.py --quick` (the last 500 rows of the bundled synthetic CSV, 1 epoch, 4 qubits, 2 layers, seed 42) on **synthetic data**, just to check that the pipeline works
 end to end. They say nothing about the method's real accuracy. At this budget the model has not converged and is **worse than persistence**.
 
 | Metric | Model | Persistence |
 |---|---|---|
-| MAE | 1.064 | 0.375 |
-| RMSE | 1.315 | 0.474 |
-| MAPE (%) | 11.241 | 4.106 |
-| R² | 0.325 | 0.912 |
+| MAE | 0.671 | 0.347 |
+| RMSE | 0.795 | 0.443 |
+| MAPE (%) | 7.321 | 3.850 |
+| R² | 0.024 | 0.700 |
 
 ## Live demo · 演示
 
