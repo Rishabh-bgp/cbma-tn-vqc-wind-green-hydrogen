@@ -2,7 +2,7 @@
 
 # CBMA-TN-VQC: Quantum-Inspired Tensor Network + VQC + CNN-BiLSTM-MultiHead Attention for Wind Forecasting and Green Hydrogen (Reference Implementation)
 
-[![Live demo](https://img.shields.io/badge/Live%20demo-GitHub%20Pages-b3121b)](https://rishabh-bgp.github.io/cbma-tn-vqc-wind-green-hydrogen/) [![CI](https://github.com/Rishabh-bgp/cbma-tn-vqc-wind-green-hydrogen/actions/workflows/ci.yml/badge.svg)](https://github.com/Rishabh-bgp/cbma-tn-vqc-wind-green-hydrogen/actions/workflows/ci.yml) [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/Rishabh-bgp/cbma-tn-vqc-wind-green-hydrogen/blob/main/notebooks/cbma-tn-vqc-wind-green-hydrogen_walkthrough.ipynb)
+[![Live demo](https://img.shields.io/badge/Live%20demo-GitHub%20Pages-b3121b)](https://rishabh-bgp.github.io/cbma-tn-vqc-wind-green-hydrogen/) [![CI](https://github.com/Rishabh-bgp/cbma-tn-vqc-wind-green-hydrogen/actions/workflows/ci.yml/badge.svg)](https://github.com/Rishabh-bgp/cbma-tn-vqc-wind-green-hydrogen/actions/workflows/ci.yml) [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/Rishabh-bgp/cbma-tn-vqc-wind-green-hydrogen/blob/main/notebooks/cbma-tn-vqc-wind-green-hydrogen_walkthrough.ipynb) [![License: MIT](https://img.shields.io/badge/License-MIT-d4af37.svg)](LICENSE) ![Python 3.12](https://img.shields.io/badge/python-3.12-1a1a1a) ![Data: synthetic](https://img.shields.io/badge/data-synthetic-1a1a1a)
 
 > **Reference implementation.** This is the reference implementation of my paper (Rishabh Aryan et al.), rebuilt in Python on synthetic data because the original SCADA data is confidential. Results will differ from the published numbers. Authors: Rishabh Aryan, Sonam Eyden, Manimozhi I and Prof. Dr. Tryambak Hiwarkar. All quantum components run **on a classical simulator only** (PennyLane `default.qubit`, CPU, 4 qubits, 2 layers by default; the paper uses a 10-qubit, 5-layer circuit).
 > Results from this code **will differ** from the published results, and the numbers reported in the paper have **not** been reproduced here.
@@ -67,7 +67,7 @@ python train.py --csv path/to/scada.csv --epochs 30 --qubits 6
 The script prints and saves (`results/*_metrics.json`) **MAE, RMSE, MAPE and R²** on the chronological test split, plus a
 naive persistence baseline for comparison. MAPE uses a 0.5 m/s floor in the denominator so calm periods don't blow it up.
 
-## Smoke-test results (synthetic data only) · 測試
+## Results (synthetic data only) · 結果
 
 These come from `python train.py --quick` (the last 500 rows of the bundled synthetic CSV, 1 epoch, 4 qubits, 2 layers, seed 42) on **synthetic data**, just to check that the pipeline works
 end to end. They say nothing about the method's real accuracy. At this budget the model has not converged and is **worse than persistence**.
@@ -120,10 +120,11 @@ pytest -q
 
 MIT © 2026 Rishabh Aryan. See [LICENSE](LICENSE). The paper itself remains under its publisher's terms.
 
+## M.Tech Thesis Work in AI and Data Science, IIIT Bhagalpur · 學位論文
 
-## M.Tech in AI and Data Science, IIIT Bhagalpur: Thesis Work
+*An Investigation into Advanced Techniques for Wind Speed Forecasting with Applications to Renewable Energy Grid Integration*
 
-Wind power forecasting reference implementations from my M.Tech thesis work at IIIT Bhagalpur, grouped by method.
+This repository is part of my M.Tech thesis work.
 
 ### Quantum and hybrid quantum machine learning
 
