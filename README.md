@@ -1,4 +1,4 @@
-<p align="center"><img src="docs/img/banner.svg" alt="CBMA-TN-VQC · Wind for Green Hydrogen: Daoist-style banner, reference implementation by Rishabh Aryan" width="100%"></p>
+<p align="center"><img src="docs/img/banner.png" alt="CBMA-TN-VQC · Wind for Green Hydrogen: Daoist-style banner, reference implementation by Rishabh Aryan" width="100%"></p>
 
 # CBMA-TN-VQC: Quantum-Inspired Tensor Network + VQC + CNN-BiLSTM-MultiHead Attention for Wind Forecasting and Green Hydrogen (Reference Implementation)
 
