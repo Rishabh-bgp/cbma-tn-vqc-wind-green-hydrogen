@@ -2,7 +2,7 @@
 
 # CBMA-TN-VQC: Quantum-Inspired Tensor Network + VQC + CNN-BiLSTM-MultiHead Attention for Wind Forecasting and Green Hydrogen (Reference Implementation)
 
-[![Live demo](https://img.shields.io/badge/Live%20demo-GitHub%20Pages-b3121b)](https://rishabh-bgp.github.io/cbma-tn-vqc-wind-green-hydrogen/) [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/Rishabh-bgp/cbma-tn-vqc-wind-green-hydrogen/blob/main/notebooks/cbma-tn-vqc-wind-green-hydrogen_walkthrough.ipynb)
+[![Live demo](https://img.shields.io/badge/Live%20demo-GitHub%20Pages-b3121b)](https://rishabh-bgp.github.io/cbma-tn-vqc-wind-green-hydrogen/) [![CI](https://github.com/Rishabh-bgp/cbma-tn-vqc-wind-green-hydrogen/actions/workflows/ci.yml/badge.svg)](https://github.com/Rishabh-bgp/cbma-tn-vqc-wind-green-hydrogen/actions/workflows/ci.yml) [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/Rishabh-bgp/cbma-tn-vqc-wind-green-hydrogen/blob/main/notebooks/cbma-tn-vqc-wind-green-hydrogen_walkthrough.ipynb)
 
 > **Reference implementation.** This is the reference implementation of my paper (Rishabh Aryan et al.), rebuilt in Python on synthetic data because the original SCADA data is confidential. Results will differ from the published numbers. Authors: Rishabh Aryan, Sonam Eyden, Manimozhi I and Prof. Dr. Tryambak Hiwarkar. All quantum components run **on a classical simulator only** (PennyLane `default.qubit`, CPU, 4 qubits, 2 layers by default; the paper uses a 10-qubit, 5-layer circuit).
 > Results from this code **will differ** from the published results, and the numbers reported in the paper have **not** been reproduced here.
