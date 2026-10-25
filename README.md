@@ -1,3 +1,5 @@
+<p align="center"><img src="docs/img/banner.svg" alt="CBMA-TN-VQC · Wind for Green Hydrogen: Daoist-style banner, independent reimplementation by Rishabh Aryan" width="100%"></p>
+
 # CBMA-TN-VQC: Quantum-Inspired Tensor Network + VQC + CNN-BiLSTM-MultiHead Attention for Wind Forecasting and Green Hydrogen (Reimplementation)
 
 [![Live demo](https://img.shields.io/badge/Live%20demo-GitHub%20Pages-2ec4b6)](https://rishabh-bgp.github.io/cbma-tn-vqc-wind-green-hydrogen/) [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/Rishabh-bgp/cbma-tn-vqc-wind-green-hydrogen/blob/main/notebooks/cbma-tn-vqc-wind-green-hydrogen_walkthrough.ipynb)
@@ -9,13 +11,13 @@
 
 **Keywords:** green hydrogen, wind speed forecasting, tensor network, matrix product state, variational quantum circuit, CNN-BiLSTM, multi-head attention, PEM electrolyser, quantum machine learning, PyTorch, PennyLane
 
-## Paper
+## Paper · 論文
 
 Er. Rishabh Aryan, Sonam Eyden, Manimozhi I and Prof. Dr. Tryambak Hiwarkar, "Quantum-Classical Hybrid Intelligence for the Green Hydrogen Revolution: Quantum-Inspired Tensor Networks and Variational Quantum Circuits Integrated with CNN-BiLSTM-MultiHead Attention for Hyper-Accurate Wind Speed Forecasting and Real-Time Electrolyzer Optimization on Indian SCADA Data," *Tanz Research Journal*, ISSN 1869-7720, Vol. 12, Issue 7, pp. 84–107, July 2026.
 
 Full credit for the method goes to the paper's authors. Any simplifications or mistakes in this reimplementation are mine.
 
-## Method
+## Method · 方法
 
 Three branches are fused into one regression head:
 
@@ -25,7 +27,7 @@ Three branches are fused into one regression head:
 
 `train.py` then turns the wind forecast into power through a cubic power curve and feeds it to a **toy PEM electrolyser model** (part-load efficiency curve, HHV 39.4 kWh/kg) to report forecast-informed hydrogen output. That model is a simple illustration, not the paper's Butler–Volmer/thermal electrolyser model or its LCOH optimiser.
 
-## Architecture
+## Architecture · 架構
 
 ```
 x (B,T,5) ─┬→ Conv1D→BiLSTM→MultiHeadAttn→mean ─→ c (32) ─→ VQC → ⟨Z⟩ (Q)
@@ -33,7 +35,7 @@ x (B,T,5) ─┬→ Conv1D→BiLSTM→MultiHeadAttn→mean ─→ c (32) ─→ 
  concat[c, t, ⟨Z⟩] → Dense(→32→1) → ŷ → power curve → toy electrolyser → H₂ kg/h
 ```
 
-## Data
+## Data · 數據
 
 The original SCADA data used in the paper is confidential and **not publicly available**, so it is not included here (everything in `data/` except the bundled synthetic CSV is git-ignored). The original code was not available either.
 `src/data.py` provides:
@@ -51,7 +53,7 @@ The original SCADA data used in the paper is confidential and **not publicly ava
 Features per time step are wind speed, sin/cos of direction, theoretical power and active power (kW/1000), standardised
 on the training split. The target is wind speed `horizon` steps ahead. The data is split chronologically 70/15/15.
 
-## How to run
+## How to run · 運行
 
 ```bash
 python -m venv .venv && source .venv/bin/activate
@@ -67,7 +69,7 @@ python train.py --csv path/to/scada.csv --epochs 30 --qubits 6
 The script prints and saves (`results/*_metrics.json`) **MAE, RMSE, MAPE and R²** on the chronological test split, plus a
 naive persistence baseline for comparison. MAPE uses a 0.5 m/s floor in the denominator so calm periods don't blow it up.
 
-## Smoke-test results (synthetic data only)
+## Smoke-test results (synthetic data only) · 測試
 
 These come from a deliberately tiny run (2 epochs, 1,500 synthetic rows, 4 qubits, seed 42) on **synthetic data**, just to check that the pipeline works
 end to end. They say nothing about the method's real accuracy. At this budget the model has not converged and is **worse than persistence**.
@@ -79,23 +81,23 @@ end to end. They say nothing about the method's real accuracy. At this budget th
 | MAPE (%) | 11.241 | 4.106 |
 | R² | 0.325 | 0.912 |
 
-## Live demo
+## Live demo · 演示
 
 **[https://rishabh-bgp.github.io/cbma-tn-vqc-wind-green-hydrogen/](https://rishabh-bgp.github.io/cbma-tn-vqc-wind-green-hydrogen/)** runs entirely in your browser. A small version of the model (trained briefly on the bundled synthetic CSV to predict the 10-minute change in wind speed) is exported to JSON by `web/export_model.py`, and its forward pass is re-implemented in plain JavaScript (`site/model.js`), including a small statevector simulator for the quantum circuit. `tests/test_js_parity.py` checks that the JS and PyTorch predictions agree within 1e-4. The page shows a forecast chart against persistence, sliders for wind inputs, the metrics and the disclaimer.
 
 ![Live demo screenshot](docs/img/demo.png)
 
-## Notebook
+## Notebook · 筆記本
 
 [`notebooks/cbma-tn-vqc-wind-green-hydrogen_walkthrough.ipynb`](notebooks/cbma-tn-vqc-wind-green-hydrogen_walkthrough.ipynb) [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/Rishabh-bgp/cbma-tn-vqc-wind-green-hydrogen/blob/main/notebooks/cbma-tn-vqc-wind-green-hydrogen_walkthrough.ipynb) is a short, beginner-friendly walkthrough: load the synthetic CSV, quick EDA plots, a small version of the model, brief training and a comparison with a persistence baseline. It works when opened on its own in Colab (it fetches the repo code and data). It uses **synthetic data only** and does **not** reproduce the paper's results.
 
-## Tests
+## Tests · 測試
 
 ```bash
 pytest -q
 ```
 
-## Repository layout
+## Repository layout · 結構
 
 ```
 ├── train.py              # train + evaluate (MAE/RMSE/MAPE/R²)
@@ -109,18 +111,18 @@ pytest -q
 ├── requirements.txt  LICENSE  .gitignore
 ```
 
-## Limitations
+## Limitations · 局限
 
 - The source PDF is a scanned document; the method was read from the page images, so some details (e.g. exact layer sizes) are my interpretation.
 - Electrolyser and LCOH results in the paper are not reproduced; only a toy dispatch is included.
 - Quantum hardware noise and ZNE experiments are not implemented.
 - Simulated quantum circuits scale exponentially with qubit count, so the defaults use few qubits. Larger settings will be slow on CPU.
 
-## Licence
+## Licence · 許可
 
 MIT © 2026 Rishabh Aryan. See [LICENSE](LICENSE). The paper itself remains under its publisher's terms.
 
-## Other repositories by Rishabh Aryan
+## Other repositories by Rishabh Aryan · 其他
 
 - [beed-ml-study](https://github.com/Rishabh-bgp/beed-ml-study)
 - [pan-cancer-classification](https://github.com/Rishabh-bgp/pan-cancer-classification)
