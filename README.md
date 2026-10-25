@@ -1,21 +1,19 @@
-<p align="center"><img src="docs/img/banner.svg" alt="CBMA-TN-VQC · Wind for Green Hydrogen: Daoist-style banner, independent reimplementation by Rishabh Aryan" width="100%"></p>
+<p align="center"><img src="docs/img/banner.svg" alt="CBMA-TN-VQC · Wind for Green Hydrogen: Daoist-style banner, reference implementation by Rishabh Aryan" width="100%"></p>
 
-# CBMA-TN-VQC: Quantum-Inspired Tensor Network + VQC + CNN-BiLSTM-MultiHead Attention for Wind Forecasting and Green Hydrogen (Reimplementation)
+# CBMA-TN-VQC: Quantum-Inspired Tensor Network + VQC + CNN-BiLSTM-MultiHead Attention for Wind Forecasting and Green Hydrogen (Reference Implementation)
 
-[![Live demo](https://img.shields.io/badge/Live%20demo-GitHub%20Pages-2ec4b6)](https://rishabh-bgp.github.io/cbma-tn-vqc-wind-green-hydrogen/) [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/Rishabh-bgp/cbma-tn-vqc-wind-green-hydrogen/blob/main/notebooks/cbma-tn-vqc-wind-green-hydrogen_walkthrough.ipynb)
+[![Live demo](https://img.shields.io/badge/Live%20demo-GitHub%20Pages-b3121b)](https://rishabh-bgp.github.io/cbma-tn-vqc-wind-green-hydrogen/) [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/Rishabh-bgp/cbma-tn-vqc-wind-green-hydrogen/blob/main/notebooks/cbma-tn-vqc-wind-green-hydrogen_walkthrough.ipynb)
 
-> **Independent reimplementation.** This repository is a clean, independent reimplementation of the method described in the
-> paper cited below, written from the paper's text. It is **not** the original authors' code, and it does **not** use the
-> paper's dataset. All quantum components run **on a classical simulator only** (PennyLane `default.qubit`, CPU, 4 qubits, 2 layers by default; the paper uses a 10-qubit, 5-layer circuit).
+> **Reference implementation.** This is the reference implementation of my paper (Rishabh Aryan et al.), rebuilt in Python on synthetic data because the original SCADA data is confidential. Results will differ from the published numbers. Authors: Rishabh Aryan, Sonam Eyden, Manimozhi I and Prof. Dr. Tryambak Hiwarkar. All quantum components run **on a classical simulator only** (PennyLane `default.qubit`, CPU, 4 qubits, 2 layers by default; the paper uses a 10-qubit, 5-layer circuit).
 > Results from this code **will differ** from the published results, and the numbers reported in the paper have **not** been reproduced here.
 
-**Keywords:** green hydrogen, wind speed forecasting, tensor network, matrix product state, variational quantum circuit, CNN-BiLSTM, multi-head attention, PEM electrolyser, quantum machine learning, PyTorch, PennyLane
+**Keywords:** green hydrogen, wind speed forecasting, tensor network, matrix product state, variational quantum circuit, CNN-BiLSTM, multi-head attention, PEM electrolyzer, quantum machine learning, PyTorch, PennyLane
 
 ## Paper · 論文
 
 Er. Rishabh Aryan, Sonam Eyden, Manimozhi I and Prof. Dr. Tryambak Hiwarkar, "Quantum-Classical Hybrid Intelligence for the Green Hydrogen Revolution: Quantum-Inspired Tensor Networks and Variational Quantum Circuits Integrated with CNN-BiLSTM-MultiHead Attention for Hyper-Accurate Wind Speed Forecasting and Real-Time Electrolyzer Optimization on Indian SCADA Data," *Tanz Research Journal*, ISSN 1869-7720, Vol. 12, Issue 7, pp. 84–107, July 2026.
 
-Full credit for the method goes to the paper's authors. Any simplifications or mistakes in this reimplementation are mine.
+Authors: Rishabh Aryan, Sonam Eyden, Manimozhi I and Prof. Dr. Tryambak Hiwarkar. Any simplifications in this Python rebuild are noted under Limitations.
 
 ## Method · 方法
 
@@ -25,19 +23,19 @@ Three branches are fused into one regression head:
 2. **Quantum-inspired tensor network (TN):** each time step is mapped to a 2-dimensional feature vector [cos θ, sin θ] and contracted through a Matrix Product State chain (bond dimension 8). This is classical tensor-network maths, not a quantum circuit.
 3. **VQC branch:** the CBMA context is angle-encoded into a simulated variational quantum circuit (RY/RZ layers, circular CNOT), read out as ⟨Z⟩.
 
-`train.py` then turns the wind forecast into power through a cubic power curve and feeds it to a **toy PEM electrolyser model** (part-load efficiency curve, HHV 39.4 kWh/kg) to report forecast-informed hydrogen output. That model is a simple illustration, not the paper's Butler–Volmer/thermal electrolyser model or its LCOH optimiser.
+`train.py` then turns the wind forecast into power through a cubic power curve and feeds it to a **toy PEM electrolyzer model** (part-load efficiency curve, HHV 39.4 kWh/kg) to report forecast-informed hydrogen output. That model is a simple illustration, not the paper's Butler–Volmer/thermal electrolyzer model or its LCOH optimizer.
 
 ## Architecture · 架構
 
 ```
 x (B,T,5) ─┬→ Conv1D→BiLSTM→MultiHeadAttn→mean ─→ c (32) ─→ VQC → ⟨Z⟩ (Q)
             └→ MPS tensor network (bond 8) ────────→ t (8)
- concat[c, t, ⟨Z⟩] → Dense(→32→1) → ŷ → power curve → toy electrolyser → H₂ kg/h
+ concat[c, t, ⟨Z⟩] → Dense(→32→1) → ŷ → power curve → toy electrolyzer → H₂ kg/h
 ```
 
 ## Data · 數據
 
-The original SCADA data used in the paper is confidential and **not publicly available**, so it is not included here (everything in `data/` except the bundled synthetic CSV is git-ignored). The original code was not available either.
+The original SCADA data used in the paper is confidential and **not publicly available**, so it is not included here (everything in `data/` except the bundled synthetic CSV is git-ignored).
 `src/data.py` provides:
 
 - `load_scada_csv(path)`: loads a SCADA-style CSV with columns for timestamp, wind speed (m/s), wind direction (°),
@@ -50,7 +48,7 @@ The original SCADA data used in the paper is confidential and **not publicly ava
 
 **Bundled synthetic dataset:** `data/synthetic/synthetic_scada.csv` (1500 rows, 10-minute steps, seed 0) is **synthetic data generated by `scripts/make_synthetic.py`**. It is **not** the confidential SCADA data used in the paper and has no connection to any real wind farm. `train.py` uses it by default. To use your own data locally, pass `--csv path/to/scada.csv`. Anything else you put in `data/` is git-ignored, so real data is never committed.
 
-Features per time step are wind speed, sin/cos of direction, theoretical power and active power (kW/1000), standardised
+Features per time step are wind speed, sin/cos of direction, theoretical power and active power (kW/1000), standardized
 on the training split. The target is wind speed `horizon` steps ahead. The data is split chronologically 70/15/15.
 
 ## How to run · 運行
@@ -114,11 +112,11 @@ pytest -q
 ## Limitations · 局限
 
 - The source PDF is a scanned document; the method was read from the page images, so some details (e.g. exact layer sizes) are my interpretation.
-- Electrolyser and LCOH results in the paper are not reproduced; only a toy dispatch is included.
+- Electrolyzer and LCOH results in the paper are not reproduced; only a toy dispatch is included.
 - Quantum hardware noise and ZNE experiments are not implemented.
 - Simulated quantum circuits scale exponentially with qubit count, so the defaults use few qubits. Larger settings will be slow on CPU.
 
-## Licence · 許可
+## License · 許可
 
 MIT © 2026 Rishabh Aryan. See [LICENSE](LICENSE). The paper itself remains under its publisher's terms.
 
